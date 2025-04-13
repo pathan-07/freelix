@@ -1,0 +1,704 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Add new animation keyframes */
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+:root {
+    --color-primary: #000000;
+    --color-secondary: #ffffff;
+    --color-gray-100: #f8f8f8;
+    --color-gray-200: #eeeeee;
+    --color-gray-300: #dddddd;
+    --color-gray-400: #cccccc;
+    --color-gray-500: #999999;
+    --color-gray-600: #666666;
+    --color-gray-700: #333333;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: var(--color-primary);
+    background-color: var(--color-secondary);
+}
+
+/* Navigation Styles */
+.main-header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    animation: slideInFromTop 0.8s ease-out;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 4rem;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    animation: slideInFromLeft 0.8s ease-out;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: var(--color-primary);
+    transition: opacity 0.3s ease;
+}
+
+.logo-link:hover {
+    opacity: 0.8;
+}
+
+.nav-links a {
+    color: var(--color-gray-600);
+    text-decoration: none;
+    margin: 0 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--color-primary);
+}
+
+/* Banner Styles */
+.banner {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+    margin-top: 70px;
+    animation: scaleIn 1s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.banner-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.banner-content h1 {
+    font-size: 2.5rem;
+    color: var(--color-secondary);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    line-height: 1.2;
+    animation: fadeInUp 1s ease-out 0.5s;
+    animation-fill-mode: both;
+}
+
+/* Add responsive styles for smaller screens */
+@media (max-width: 768px) {
+    .banner {
+        height: 400px;
+    }
+    
+    .banner-content h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner {
+        height: 300px;
+    }
+    
+    .banner-content h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Form and Input Styles */
+.auth-forms {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 360px;
+    position: relative;
+}
+
+.form-toggle {
+    display: flex;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 0.75rem;
+    border: none;
+    background: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggle-btn.active {
+    color: #000;
+    border-bottom: 2px solid #000;
+}
+
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+    position: relative;
+}
+
+/* Input Styles */
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: #f8f8f8;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #000;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styles */
+.btn-primary,
+.btn-google {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #000;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #333;
+}
+
+.btn-google {
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.btn-google:hover {
+    background: #f5f5f5;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(5px);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+    .auth-forms {
+        padding: 1.5rem;
+        width: 95%;
+    }
+
+    .form-group input,
+    .form-group select,
+    .btn-primary,
+    .btn-google {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Grid and Card Styles */
+.gigs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.gig-card {
+    background-color: var(--color-secondary);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease;
+}
+
+.gig-card:hover {
+    transform: translateY(-5px);
+}
+
+.gig-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+/* Profile Styles */
+.profile-header {
+    background-color: var(--color-gray-100);
+    padding: 2rem;
+    text-align: center;
+}
+
+.profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Messaging Styles */
+.messaging-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    height: calc(100vh - 60px);
+    margin-top: 60px;
+}
+
+.chat-sidebar {
+    border-right: 1px solid var(--color-gray-300);
+    background-color: var(--color-gray-100);
+}
+
+.chat-messages {
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.message.sent {
+    justify-content: flex-end;
+}
+
+.message-content {
+    max-width: 70%;
+    padding: 0.75rem;
+    border-radius: 8px;
+    background-color: var(--color-gray-200);
+}
+
+.message.sent .message-content {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .messaging-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .gigs-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .banner {
+        height: 300px;
+    }
+}
+
+/* Utility Classes */
+.avatar-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-tiny {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+}
+
+.modal-content {
+    background-color: var(--color-secondary);
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 2rem auto;
+    position: relative;
+    animation: scaleIn 0.3s ease-out;
+}
+
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Animation Classes */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Loading States */
+.loading {
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    animation: spin 1s linear infinite;
+}
+
+/* Add these styles to your styles.css */
+
+.auth-nav {
+    position: relative;
+    animation: fadeInUp 0.5s ease-out 0.8s;
+    animation-fill-mode: both;
+}
+
+.auth-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 0.95rem;
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 1px solid #000;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    background: transparent;
+    animation: scaleIn 0.5s ease-out;
+}
+
+.auth-link:hover {
+    background-color: #000;
+    transform: scale(1.05);
+}
+
+.login-text, .signup-text {
+    color: #000;
+    transition: all 0.3s ease;
+    padding: 0 4px;
+}
+
+.divider {
+    color: #000;
+    margin: 0 2px;
+    font-weight: 300;
+    transition: all 0.3s ease;
+}
+
+/* Hover effects */
+.auth-link:hover .login-text,
+.auth-link:hover .signup-text,
+.auth-link:hover .divider {
+    color: #fff;
+}
+
+/* Optional: Add a subtle scale effect on hover */
+.auth-link:hover {
+    transform: scale(1.05);
+}
+
+/* Add a subtle background animation on hover */
+.auth-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.auth-link:hover::before {
+    left: 100%;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .auth-link {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Update existing nav-container styles */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 4rem;
+    background: rgba(255, 255, 255, 0.95);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Update existing nav-categories styles */
+.nav-categories {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    flex-grow: 1;
+    margin: 0 2rem;
+    animation: fadeInUp 0.5s ease-out 0.3s;
+    animation-fill-mode: both;
+}
+
+.category-link {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+    position: relative;
+    white-space: nowrap;
+    animation: fadeInUp 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+/* Add staggered animations for nav items */
+.nav-categories a:nth-child(1) { animation-delay: 0.1s; }
+.nav-categories a:nth-child(2) { animation-delay: 0.2s; }
+.nav-categories a:nth-child(3) { animation-delay: 0.3s; }
+.nav-categories a:nth-child(4) { animation-delay: 0.4s; }
+.nav-categories a:nth-child(5) { animation-delay: 0.5s; }
+
+.category-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #000;
+    transition: width 0.3s ease;
+}
+
+.category-link:hover {
+    color: #000;
+}
+
+.category-link:hover::after {
+    width: 100%;
+}
+
+/* Logo styles */
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    .nav-container {
+        padding: 1rem 2rem;
+    }
+    
+    .nav-categories {
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .nav-categories {
+        gap: 1.5rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 1rem;
+    }
+
+    .nav-categories {
+        display: none;
+    }
+
+    .auth-link {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Optional: Add a mobile menu button */
+.mobile-menu-btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+}
+
+/* Update Loading Animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Ensure animations work smoothly on mobile */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

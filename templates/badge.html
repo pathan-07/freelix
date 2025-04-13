@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievement Badges</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 50px 20px;
+        }
+
+        .badge-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .badge:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+
+        .badge-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+
+        .silver .badge-icon {
+            background: linear-gradient(135deg, #C0C0C0, #E8E8E8);
+        }
+
+        .gold .badge-icon {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+
+        .platinum .badge-icon {
+            background: linear-gradient(135deg, #E5E4E2, #B9B9B9);
+        }
+
+        .diamond .badge-icon {
+            background: linear-gradient(135deg, #B9F2FF, #E3F6FF);
+        }
+
+        .badge h2 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .badge p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .requirements {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+
+        .requirements h3 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .requirements ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .requirements li {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .requirements li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button i {
+            font-size: 18px;
+        }
+
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Home
+    </a>
+    
+    <div class="header">
+        <h1>Achievement Badges</h1>
+        <p>Recognition for excellence and dedication in your professional journey</p>
+    </div>
+    
+    <div class="badge-container">
+        <div class="badge silver" style="animation: fadeInUp 0.5s ease forwards;">
+            <div class="badge-icon">🥈</div>
+            <h2>Silver Badge</h2>
+            <p>Awarded for completing 10 successful projects</p>
+            <div class="requirements">
+                <h3>Requirements:</h3>
+                <ul>
+                    <li>Complete 10 projects successfully</li>
+                    <li>Maintain a 4.0+ rating</li>
+                    <li>Meet all project deadlines</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="badge gold" style="animation: fadeInUp 0.5s ease forwards 0.2s;">
+            <div class="badge-icon">🏅</div>
+            <h2>Gold Badge</h2>
+            <p>Awarded for maintaining 4.5+ rating for 6 months</p>
+            <div class="requirements">
+                <h3>Requirements:</h3>
+                <ul>
+                    <li>Maintain a 4.5+ rating for 6 consecutive months</li>
+                    <li>Complete at least 5 projects during this period</li>
+                    <li>Receive positive feedback from 90% of clients</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="badge platinum" style="animation: fadeInUp 0.5s ease forwards 0.4s;">
+            <div class="badge-icon">⭐</div>
+            <h2>Platinum Badge</h2>
+            <p>Awarded for exceptional performance in 50+ projects</p>
+            <div class="requirements">
+                <h3>Requirements:</h3>
+                <ul>
+                    <li>Complete 50+ projects successfully</li>
+                    <li>Maintain a 4.8+ rating</li>
+                    <li>Be in the top 5% of performers</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="badge diamond" style="animation: fadeInUp 0.5s ease forwards 0.6s;">
+            <div class="badge-icon">💎</div>
+            <h2>Diamond Badge</h2>
+            <p>Elite status for top 1% performers</p>
+            <div class="requirements">
+                <h3>Requirements:</h3>
+                <ul>
+                    <li>Be in the top 1% of all performers</li>
+                    <li>Complete 100+ projects with 5.0 rating</li>
+                    <li>Maintain Diamond status for 12+ months</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

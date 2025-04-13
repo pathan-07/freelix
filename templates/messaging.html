@@ -1,0 +1,60 @@
+athan faizan/hackathon/messaging.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - FREELIX</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/messaging.css">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="logo">FREELIX</div>
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="profile.html" class="nav-link">Profile</a>
+            <a href="messaging.html" class="nav-link active">Messages</a>
+            <a href="order.html" class="nav-link">Orders</a>
+        </nav>
+    </header>
+    
+    <div class="layout">
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="messaging-layout">
+                <!-- Conversations List -->
+                <div class="conversations-list">
+                    <div class="conversations-header">
+                        <h2>Messages</h2>
+                        <input type="text" placeholder="Search conversations..." class="search-input">
+                    </div>
+                    <div class="conversations">
+                        <!-- Conversation items will be added here -->
+                    </div>
+                </div>
+
+                <!-- Chat Area -->
+                <div class="chat-area">
+                    <div class="chat-header">
+                        <div class="chat-user">
+                            <img src="/static/images/default-avatar.jpg" alt="User" class="avatar-small">
+                            <span class="user-name">Jane Doe</span>
+                        </div>
+                    </div>
+                    <div class="messages-container">
+                        <!-- Messages will be added here -->
+                    </div>
+                    <div class="chat-input">
+                        <form id="messageForm" class="message-form">
+                            <textarea placeholder="Type a message..." class="message-input"></textarea>
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/static/js/messaging.js"></script>
+</body>
+</html>

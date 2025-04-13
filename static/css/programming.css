@@ -1,0 +1,116 @@
+/* Programming & Tech specific styles */
+.category-main {
+    margin-top: 80px;
+    padding: 2rem;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.category-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeInUp 0.8s ease-out;
+    position: relative;
+}
+
+.category-header::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--color-primary);
+}
+
+.category-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-primary);
+}
+
+.category-header p {
+    color: var(--color-gray-600);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+    animation: fadeInUp 1s ease-out;
+}
+
+.service-card {
+    background: var(--color-secondary);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    position: relative;
+    animation: scaleIn 0.5s ease-out;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.service-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover img {
+    transform: scale(1.05);
+}
+
+.service-card h3 {
+    padding: 1rem;
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 1.2rem;
+}
+
+.service-card p {
+    padding: 0 1rem;
+    color: var(--color-gray-600);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.service-card .price {
+    display: block;
+    padding: 1rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    border-top: 1px solid var(--color-gray-200);
+    background: var(--color-gray-100);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .services-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .category-main {
+        margin-top: 120px;
+        padding: 1rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .category-header h1 {
+        font-size: 2rem;
+    }
+}   

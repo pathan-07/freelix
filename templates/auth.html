@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreelanceHub - Login/Signup</title>
+    <link rel="stylesheet" href="/static/css/auth.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← Back to Home</a>
+        
+        <div class="auth-container">
+            <div class="auth-header">
+                <button class="tab-btn active" data-tab="login">Login</button>
+                <button class="tab-btn" data-tab="signup">Sign Up</button>
+            </div>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p style="color: {% if 'success' in message %}green{% else %}#e74c3c{% endif %}; margin: 10px 0; font-weight: bold; text-align: center;">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="auth-forms">
+                <!-- Login Form -->
+                <form id="login-form" class="form active" method="POST" action="{{ url_for('auth.login') }}">
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Login</button>
+                    <button type="button" class="google-btn">
+                        Continue with Google
+                    </button>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signup-form" class="form" method="POST" action="{{ url_for('auth.signup') }}">
+                    <div class="form-group">
+                        <input type="text" name="full_name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <input type="hidden" name="account_type" value="freelancer">
+                    <button type="submit" class="submit-btn">Sign Up</button>
+                    <button type="button" class="google-btn">
+                        Continue with Google
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/ui.js"></script>
+    <script src="/static/js/auth.js"></script>
+</body>
+</html>

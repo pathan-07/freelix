@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeLix - OTP Verification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .logo {
+            color: #565454;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .otp-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .otp-input {
+            width: 50px;
+            height: 60px;
+            text-align: center;
+            font-size: 24px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .otp-input:focus {
+            border-color: #5f5455;
+            box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
+        }
+        
+        .verify-btn {
+            background-color: #534c4c;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .verify-btn:hover {
+            background-color: #5a5151;
+        }
+        
+        .resend {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .resend a {
+            color: #544b4b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .resend a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+                margin: 0 15px;
+            }
+            
+            .otp-input {
+                width: 40px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">FreeLix</div>
+        <h1>OTP Verification</h1>
+        <p class="subtitle">We've sent a 6-digit verification code to your email</p>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p style="color: {% if 'success' in message %}green{% else %}#e74c3c{% endif %}; margin-bottom: 15px; font-weight: bold;">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form id="otpForm" method="POST" action="{{ url_for('auth.verify_otp') }}">
+            <div class="otp-container">
+                <input type="text" name="otp1" class="otp-input" maxlength="1" pattern="[0-9]" required>
+                <input type="text" name="otp2" class="otp-input" maxlength="1" pattern="[0-9]" required>
+                <input type="text" name="otp3" class="otp-input" maxlength="1" pattern="[0-9]" required>
+                <input type="text" name="otp4" class="otp-input" maxlength="1" pattern="[0-9]" required>
+                <input type="text" name="otp5" class="otp-input" maxlength="1" pattern="[0-9]" required>
+                <input type="text" name="otp6" class="otp-input" maxlength="1" pattern="[0-9]" required>
+            </div>
+            
+            <button type="submit" class="verify-btn">Verify OTP</button>
+        </form>
+        
+        <p class="resend">
+            Didn't receive code? <a href="{{ url_for('auth.resend_otp') }}">Resend OTP</a>
+        </p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const otpInputs = document.querySelectorAll('.otp-input');
+            
+            // Auto-focus first input
+            otpInputs[0].focus();
+            
+            // Handle input events to move between fields
+            otpInputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    if (e.target.value.length === 1) {
+                        if (index < otpInputs.length - 1) {
+                            otpInputs[index + 1].focus();
+                        }
+                    }
+                });
+                
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && e.target.value.length === 0) {
+                        if (index > 0) {
+                            otpInputs[index - 1].focus();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

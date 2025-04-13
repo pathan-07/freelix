@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Community</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0b44efa8;
+            --secondary: #000000;
+            --accent: #ff0000;
+            --background: #F7FAFC;
+            --text: #1A202C;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background-color: var(--secondary);
+            padding: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(11, 68, 239, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+            z-index: 0;
+        }
+
+        .sidebar > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            padding: 30px;
+            margin-top: 60px;
+        }
+
+        .right-panel {
+            background-color: white;
+            padding: 20px;
+            border-left: 1px solid #E2E8F0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .freelancer-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .freelancer-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .freelancer-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .freelancer-card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .freelancer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .level-badge {
+            background: var(--accent);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+            }
+        }
+
+        .call-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+            align-self: flex-end;
+        }
+
+        .call-button:hover {
+            background: #4752C4;
+            transform: translateY(-2px);
+        }
+
+        .call-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .call-button:hover::after {
+            left: 100%;
+        }
+
+        .chat-group {
+            background: #F8F9FA;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: translateX(0);
+        }
+
+        .chat-group:hover {
+            background: #EDF2F7;
+            transform: translateX(5px);
+        }
+
+        .chat-group h3, .chat-group p {
+            color: black;
+            margin: 0;
+        }
+
+        .chat-group h3 {
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+        .chat-group p {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .collaboration-hub {
+            background: var(--primary);
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(11, 68, 239, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(11, 68, 239, 0.8);
+            }
+        }
+
+        .collaboration-hub h3 {
+            color: white;
+        }
+
+        .collaboration-hub p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .collaboration-hub:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(11, 68, 239, 0.3);
+            background: #1a4dff;
+        }
+
+        .message-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .message-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #E2E8F0;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .message-input input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(11, 68, 239, 0.1);
+            outline: none;
+        }
+
+        /* New Chat Styles */
+        .chat-header {
+            padding: 15px;
+            border-bottom: 1px solid #E2E8F0;
+            margin: -20px -20px 15px -20px;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .online-indicator {
+            width: 8px;
+            height: 8px;
+            background: #48BB78;
+            border-radius: 50%;
+            display: inline-block;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 15px;
+            border-radius: 15px;
+            position: relative;
+            animation: messageSlide 0.3s ease-out;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.received {
+            background: #F7F9FC;
+            border-bottom-left-radius: 5px;
+            align-self: flex-start;
+        }
+
+        .message.sent {
+            background: var(--primary);
+            color: white;
+            border-bottom-right-radius: 5px;
+            align-self: flex-end;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+
+        .message-header img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-time {
+            font-size: 0.8em;
+            color: #718096;
+            margin-top: 5px;
+        }
+
+        .message.sent .message-time {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .message-input-container {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #E2E8F0;
+            margin: 0 -20px -20px -20px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .message-input {
+            display: flex;
+            gap: 10px;
+            background: #F7F9FC;
+            padding: 10px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .message-input:focus-within {
+            box-shadow: 0 0 0 3px rgba(11, 68, 239, 0.1);
+        }
+
+        .message-input input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .message-input button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .message-input button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 10px;
+            color: #718096;
+            font-size: 0.9em;
+        }
+
+        .typing-dot {
+            width: 4px;
+            height: 4px;
+            background: #718096;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Greeting Response Styles */
+        .greeting-response {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .message.system {
+            background: #f0f2f5;
+            color: var(--text);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+            max-width: 80%;
+        }
+
+        .message.greeting {
+            background: linear-gradient(135deg, var(--primary), #1a4dff);
+            color: white;
+            border-radius: 15px;
+            padding: 12px 16px;
+            max-width: 80%;
+            align-self: flex-start;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform-origin: left center;
+            animation: greetingPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes greetingPop {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .message.greeting p {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* Connection Styles */
+        .connection-status {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .connecting-dots {
+            margin-right: 8px;
+        }
+
+        .connection-animation {
+            display: flex;
+            gap: 4px;
+        }
+
+        .connection-animation .dot {
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: connectingPulse 1.4s infinite;
+        }
+
+        .connection-animation .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .connection-animation .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes connectingPulse {
+            0%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .message.connected {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            margin-top: 10px;
+        }
+
+        .view-profile-btn {
+            display: inline-block;
+            background: white;
+            color: #28a745;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .view-profile-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            background: #f8f9fa;
+        }
+
+        /* Freelancer Details Styles */
+        .freelancer-details {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+
+        .freelancer-details p {
+            margin: 5px 0;
+            line-height: 1.4;
+        }
+
+        .freelancer-details strong {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+
+        /* Action Buttons Styles */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .message-freelancer-btn {
+            display: inline-block;
+            background: white;
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-freelancer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            background: #f8f9fa;
+        }
+
+        /* Direct Message Styles */
+        .direct-message {
+            background: linear-gradient(135deg, #6c5ce7, #a55eea);
+            margin-top: 10px;
+        }
+
+        .direct-message-input {
+            margin-top: 10px;
+        }
+
+        .direct-message-input textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            resize: vertical;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .direct-message-input textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        }
+
+        .direct-message-input button {
+            background: white;
+            color: #6c5ce7;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .direct-message-input button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            background: #f8f9fa;
+        }
+
+        .message-sent {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+        }
+
+        .message-preview {
+            font-style: italic;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .message-note {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Status Indicator Styles */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-top: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .status-indicator::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .status-indicator.online {
+            background: rgba(46, 213, 115, 0.2);
+            color: #2ed573;
+        }
+
+        .status-indicator.online::before {
+            background: #2ed573;
+            box-shadow: 0 0 5px #2ed573;
+        }
+
+        .status-indicator.busy {
+            background: rgba(255, 71, 87, 0.2);
+            color: #ff4757;
+        }
+
+        .status-indicator.busy::before {
+            background: #ff4757;
+            box-shadow: 0 0 5px #ff4757;
+        }
+
+        .status-indicator.away {
+            background: rgba(255, 168, 1, 0.2);
+            color: #ffa801;
+        }
+
+        .status-indicator.away::before {
+            background: #ffa801;
+            box-shadow: 0 0 5px #ffa801;
+        }
+
+        /* Filter Controls Styles */
+        .filter-controls {
+            margin-bottom: 25px;
+            animation: fadeInUp 0.6s ease forwards;
+            position: relative;
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .filter-controls h3 {
+            margin-bottom: 0;
+            font-size: 1.1em;
+            color: var(--text);
+        }
+
+        .filter-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .view-options {
+            display: flex;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .view-option {
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: none;
+            background: #f0f2f5;
+            color: var(--text);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .view-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .view-option.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .status-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .status-filter {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            background: #f0f2f5;
+            color: var(--text);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .status-filter::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .status-filter:hover::after {
+            left: 100%;
+        }
+
+        .status-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-filter.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .status-filter[data-status="online"]:hover {
+            background: rgba(46, 213, 115, 0.2);
+            color: #2ed573;
+        }
+
+        .status-filter[data-status="busy"]:hover {
+            background: rgba(255, 71, 87, 0.2);
+            color: #ff4757;
+        }
+
+        .status-filter[data-status="away"]:hover {
+            background: rgba(255, 168, 1, 0.2);
+            color: #ffa801;
+        }
+
+        .status-filter.active[data-status="online"] {
+            background: #2ed573;
+        }
+
+        .status-filter.active[data-status="busy"] {
+            background: #ff4757;
+        }
+
+        .status-filter.active[data-status="away"] {
+            background: #ffa801;
+        }
+
+        .freelancer-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .freelancer-cards-container.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        .freelancer-cards-container.list-view .freelancer-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .freelancer-cards-container.list-view .freelancer-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .freelancer-cards-container.list-view .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 200px;
+        }
+
+        .freelancer-cards-container.list-view .card-header h2 {
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+        }
+
+        .freelancer-cards-container.list-view .card-content {
+            flex-grow: 1;
+            margin: 0 20px;
+            min-width: 200px;
+        }
+
+        .freelancer-cards-container.list-view .card-content p {
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .freelancer-cards-container.list-view .card-footer {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            min-width: 150px;
+            justify-content: flex-end;
+        }
+
+        .freelancer-cards-container.list-view .status-indicator {
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .freelancer-cards-container.list-view .call-button {
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        /* Enhanced Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+            }
+        }
+
+        .freelancer-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .freelancer-cards-container.list-view .freelancer-card {
+            animation: slideInRight 0.6s ease forwards;
+        }
+
+        .level-badge {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive adjustments for list view */
+        @media (max-width: 768px) {
+            .freelancer-cards-container.list-view .freelancer-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .freelancer-cards-container.list-view .card-header,
+            .freelancer-cards-container.list-view .card-content,
+            .freelancer-cards-container.list-view .card-footer {
+                width: 100%;
+                min-width: auto;
+                margin: 0;
+            }
+
+            .freelancer-cards-container.list-view .card-footer {
+                justify-content: space-between;
+            }
+        }
+
+        /* Back to Home Button Styles */
+        .back-home {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            width: fit-content;
+            font-size: 0.95em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(11, 68, 239, 0.3);
+            background: #1a4dff;
+        }
+
+        .back-home::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .back-home:hover::after {
+            left: 100%;
+        }
+
+        .back-home i {
+            font-size: 1em;
+        }
+
+        /* Page Title Animation */
+        .main-content h1 {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .main-content h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            animation: expandWidth 0.8s ease forwards 0.6s;
+        }
+
+        @keyframes expandWidth {
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Alignment Guide - Visual Connection */
+        .filter-controls::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary));
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .filter-controls::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(to left, transparent, var(--primary));
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .freelancer-cards-container.grid-view .freelancer-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .freelancer-cards-container.grid-view .freelancer-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .freelancer-cards-container.grid-view .freelancer-card .card-content {
+            flex-grow: 1;
+        }
+
+        .freelancer-cards-container.grid-view .freelancer-card .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Sidebar - Community Groups -->
+        <div class="sidebar">
+            <a href="index.html" class="back-home">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+            <h2>Community Groups</h2>
+            <a href="web development community.html" style="text-decoration: none; display: block;">
+                <div class="chat-group">
+                    <h3>Web Development</h3>
+                    <p>1,234 members</p>
+                </div>
+            </a>
+            <div class="chat-group">
+                <h3>UI/UX Design</h3>
+                <p>987 members</p>
+            </div>
+            <div class="chat-group">
+                <h3>Digital Marketing</h3>
+                <p>756 members</p>
+            </div>
+            <a href="collabration pannel.html" style="text-decoration: none; display: block;">
+                <div class="chat-group collaboration-hub">
+                    <h3>Freelancer Collaboration Hub</h3>
+                    <p>Connect & Collaborate</p>
+                </div>
+            </a>
+            
+            <a href="leaderboard.html" style="text-decoration: none; display: block;">
+                <div class="chat-group">
+                    <h3>Leaderboard</h3>
+                    <p>Top Freelancers</p>
+                </div>
+            </a>
+            
+            <a href="anonymous.html" style="text-decoration: none; display: block;">
+                <div class="chat-group">
+                    <h3>Anonymous Profile</h3>
+                    <p>Browse Anonymously</p>
+                </div>
+            </a>
+            
+            <!-- Notification Settings -->
+            <div class="notification-settings">
+                <h3>Notification Settings</h3>
+                <div class="notification-option">
+                    <label>
+                        <input type="checkbox" id="notifyOnline" checked>
+                        Notify when freelancers come online
+                    </label>
+                </div>
+                <div class="notification-option">
+                    <label>
+                        <input type="checkbox" id="notifyMessage" checked>
+                        Notify when freelancers message you
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content - Freelancer Profiles -->
+        <div class="main-content">
+            <h1>Freelancers</h1>
+            
+            <!-- Filter Controls -->
+            <div class="filter-controls">
+                <div class="filter-header">
+                    <h3>Filter by Status:</h3>
+                </div>
+                <div class="filter-row">
+                    <div class="status-filters">
+                        <button class="status-filter active" data-status="all">All</button>
+                        <button class="status-filter" data-status="online">Online</button>
+                        <button class="status-filter" data-status="busy">Busy</button>
+                        <button class="status-filter" data-status="away">Away</button>
+                    </div>
+                    <div class="view-options">
+                        <button class="view-option active" data-view="grid">
+                            <i class="fas fa-th-large"></i> Grid
+                        </button>
+                        <button class="view-option" data-view="list">
+                            <i class="fas fa-list"></i> List
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="freelancer-cards-container grid-view">
+                <div class="freelancer-card" data-status="online">
+                    <div class="card-header">
+                        <h2>Faizan Pathan</h2>
+                        <span class="level-badge">Level 5</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Full Stack Developer | 5 years experience</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="status-indicator online">Online</div>
+                        <a href="faizan profile.html" class="call-button" style="text-decoration: none;">View</a>
+                    </div>
+                </div>
+
+                <div class="freelancer-card" data-status="busy">
+                    <div class="card-header">
+                        <h2>Saiyoni Shah</h2>
+                        <span class="level-badge">Level 4</span>
+                    </div>
+                    <div class="card-content">
+                        <p>UI/UX Designer | 3 years experience</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="status-indicator busy">Busy</div>
+                        <a href="saiyoni profile.html" class="call-button" style="text-decoration: none;">View</a>
+                    </div>
+                </div>
+
+                <div class="freelancer-card" data-status="away">
+                    <div class="card-header">
+                        <h2>Bhavy Pandya</h2>
+                        <span class="level-badge">Level 6</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Digital Marketing Specialist | 7 years experience</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="status-indicator away">Away</div>
+                        <a href="bhavy profile.html" class="call-button" style="text-decoration: none;">View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Chat System -->
+        <div class="right-panel">
+            <div class="chat-header">
+                <h2>
+                    <span class="online-indicator"></span>
+                    Live Community Chat
+                </h2>
+            </div>
+            
+            <div class="chat-messages">
+                <div class="message received">
+                    <div class="message-header">
+                        <img src="/static/images/faizan.jpg" alt="Faizan">
+                        <strong>Faizan Pathan</strong>
+                    </div>
+                    <p>Hey everyone! Anyone free for a quick collaboration?</p>
+                    <div class="message-time">10:30 AM</div>
+                </div>
+
+                <div class="message received">
+                    <div class="message-header">
+                        <img src="/static/images/bhavy.jpg" alt="Bhavy">
+                        <strong>Bhavy Pandya</strong>
+                    </div>
+                    <p>I'm available! What's the project about?</p>
+                    <div class="message-time">10:32 AM</div>
+                </div>
+
+                <div class="message sent">
+                    <p>I'm interested too! Is it a web development project?</p>
+                    <div class="message-time">10:33 AM</div>
+                </div>
+
+                <div class="message received">
+                    <div class="message-header">
+                        <img src="/static/images/saiyoni.jpg" alt="Saiyoni">
+                        <strong>Saiyoni Shah</strong>
+                    </div>
+                    <p>Count me in! I can help with the UI/UX design if needed.</p>
+                    <div class="message-time">10:35 AM</div>
+                </div>
+
+                <div class="typing-indicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+
+            <div class="message-input-container">
+                <div class="message-input">
+                    <input type="text" placeholder="Type your message..." id="messageInput">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Scroll to top when page loads
+        window.onload = function() {
+            window.scrollTo(0, 0);
+        };
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Add functionality to call buttons
+        document.querySelectorAll('.call-button').forEach(button => {
+            button.addEventListener('click', () => {
+                if(button.textContent === 'Start Call') {
+                    alert('Initiating call...');
+                }
+            });
+        });
+
+        // Add functionality to chat groups
+        document.querySelectorAll('.chat-group').forEach(group => {
+            group.addEventListener('click', () => {
+                alert(`Joining ${group.querySelector('h3').textContent} group chat`);
+            });
+        });
+
+        // Chat functionality
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                const chatMessages = document.querySelector('.chat-messages');
+                
+                // Add user message
+                const newMessage = document.createElement('div');
+                newMessage.className = 'message sent';
+                
+                const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                newMessage.innerHTML = `
+                    <p>${message}</p>
+                    <div class="message-time">${time}</div>
+                `;
+                
+                // Insert user message before typing indicator
+                chatMessages.insertBefore(newMessage, document.querySelector('.typing-indicator'));
+                
+                // Clear input immediately
+                input.value = '';
+                
+                // Show typing indicator briefly
+                const typingIndicator = document.querySelector('.typing-indicator');
+                typingIndicator.style.display = 'flex';
+                
+                // Process the message and generate a response with minimal delay
+                setTimeout(() => {
+                    typingIndicator.style.display = 'none';
+                    
+                    // Check if the message is a greeting
+                    if (isGreeting(message)) {
+                        addGreetingResponse();
+                    } else {
+                        // Check if the message is about freelancing
+                        if (isFreelancingRelated(message)) {
+                            addFreelancingResponse(message);
+                        } else {
+                            addNonFreelancingResponse();
+                        }
+                    }
+                    
+                    // Scroll to the bottom after response
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 800); // Brief delay for natural feel
+            }
+        }
+        
+        // Function to check if message is a greeting
+        function isGreeting(message) {
+            const lowerMessage = message.toLowerCase().trim();
+            // Specifically check for "hi" first
+            if (lowerMessage === "hi") {
+                return "hi";
+            }
+            // Then check for other greetings
+            const greetingKeywords = [
+                'hello', 'hey', 'good morning', 'good afternoon', 'good evening',
+                'greetings', 'howdy', 'sup', 'what\'s up', 'welcome'
+            ];
+            return greetingKeywords.some(greeting => lowerMessage.includes(greeting)) ? "other" : false;
+        }
+        
+        // Function to check if message is about freelancing
+        function isFreelancingRelated(message) {
+            const lowerMessage = message.toLowerCase().trim();
+            const freelancingKeywords = [
+                'freelance', 'freelancer', 'freelancing', 'project', 'client', 'work', 
+                'job', 'hire', 'payment', 'rate', 'portfolio', 'skill', 'experience',
+                'web development', 'design', 'marketing', 'programming', 'coding',
+                'upwork', 'fiverr', 'gig', 'contract', 'remote', 'work from home',
+                'deadline', 'milestone', 'proposal', 'bid', 'offer', 'collaboration',
+                'team', 'partnership', 'expertise', 'specialist', 'professional',
+                'service', 'consulting', 'consultant', 'agency', 'business'
+            ];
+            
+            return freelancingKeywords.some(keyword => lowerMessage.includes(keyword));
+        }
+        
+        // Function to check if message is requesting to connect with a freelancer
+        function isConnectRequest(message) {
+            const lowerMessage = message.toLowerCase().trim();
+            const connectKeywords = [
+                'connect', 'contact', 'message', 'reach', 'talk to', 'speak with',
+                'get in touch', 'introduce', 'introduction', 'profile', 'freelancer'
+            ];
+            
+            // Check if the message contains connect keywords
+            const hasConnectKeyword = connectKeywords.some(keyword => lowerMessage.includes(keyword));
+            
+            if (hasConnectKeyword) {
+                // Check for freelancer names in the message
+                const freelancerNames = ['faizan', 'pathan', 'saiyoni', 'shah', 'bhavy', 'pandya'];
+                const mentionedFreelancer = freelancerNames.find(name => lowerMessage.includes(name));
+                
+                if (mentionedFreelancer) {
+                    return mentionedFreelancer;
+                }
+            }
+            
+            return false;
+        }
+        
+        // Function to add a greeting response with special animation
+        function addGreetingResponse() {
+            const chatMessages = document.querySelector('.chat-messages');
+            
+            // Create container for the response
+            const responseContainer = document.createElement('div');
+            responseContainer.className = 'greeting-response';
+            responseContainer.style.opacity = '0';
+            responseContainer.style.transform = 'translateY(10px)';
+            chatMessages.appendChild(responseContainer);
+            
+            // Simple response for "hi"
+            setTimeout(() => {
+                const greetingDiv = document.createElement('div');
+                greetingDiv.className = 'message system greeting';
+                greetingDiv.innerHTML = `<p>How can I help you today?</p>`;
+                responseContainer.appendChild(greetingDiv);
+                
+                // Animate the message immediately
+                greetingDiv.style.transition = 'all 0.2s ease';
+                greetingDiv.style.opacity = '1';
+                greetingDiv.style.transform = 'translateY(0)';
+            }, 100); // Reduced delay
+            
+            // Animate the container immediately
+            responseContainer.style.transition = 'all 0.2s ease';
+            responseContainer.style.opacity = '1';
+            responseContainer.style.transform = 'translateY(0)';
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Function to add a response for freelancing-related questions
+        function addFreelancingResponse(message) {
+            const chatMessages = document.querySelector('.chat-messages');
+            
+            // Create container for the response
+            const responseContainer = document.createElement('div');
+            responseContainer.className = 'greeting-response';
+            responseContainer.style.opacity = '0';
+            responseContainer.style.transform = 'translateY(10px)';
+            chatMessages.appendChild(responseContainer);
+            
+            // Generate a relevant response based on the message
+            const response = generateFreelancingResponse(message);
+            
+            setTimeout(() => {
+                const responseDiv = document.createElement('div');
+                responseDiv.className = 'message system greeting';
+                responseDiv.innerHTML = `<p>${response}</p>`;
+                responseContainer.appendChild(responseDiv);
+                
+                // Animate the message immediately
+                responseDiv.style.transition = 'all 0.2s ease';
+                responseDiv.style.opacity = '1';
+                responseDiv.style.transform = 'translateY(0)';
+            }, 100); // Reduced delay
+            
+            // Animate the container immediately
+            responseContainer.style.transition = 'all 0.2s ease';
+            responseContainer.style.opacity = '1';
+            responseContainer.style.transform = 'translateY(0)';
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Function to add a response for non-freelancing questions
+        function addNonFreelancingResponse() {
+            const chatMessages = document.querySelector('.chat-messages');
+            
+            // Create container for the response
+            const responseContainer = document.createElement('div');
+            responseContainer.className = 'greeting-response';
+            responseContainer.style.opacity = '0';
+            responseContainer.style.transform = 'translateY(10px)';
+            chatMessages.appendChild(responseContainer);
+            
+            setTimeout(() => {
+                const responseDiv = document.createElement('div');
+                responseDiv.className = 'message system greeting';
+                responseDiv.innerHTML = `
+                    <p>This is a freelancing website. We connect freelancers with clients looking for their services. While I can't provide detailed information on non-freelancing topics, I'd be happy to help you with any questions about freelancing, finding work, hiring freelancers, or freelancing tips!</p>
+                `;
+                responseContainer.appendChild(responseDiv);
+                
+                // Animate the message immediately
+                responseDiv.style.transition = 'all 0.2s ease';
+                responseDiv.style.opacity = '1';
+                responseDiv.style.transform = 'translateY(0)';
+            }, 100); // Reduced delay
+            
+            // Animate the container immediately
+            responseContainer.style.transition = 'all 0.2s ease';
+            responseContainer.style.opacity = '1';
+            responseContainer.style.transform = 'translateY(0)';
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Function to generate a relevant freelancing response
+        function generateFreelancingResponse(message) {
+            const lowerMessage = message.toLowerCase().trim();
+            
+            // Check if this is a connection request
+            const connectRequest = isConnectRequest(message);
+            if (connectRequest) {
+                return handleConnectRequest(connectRequest);
+            }
+            
+            // Check for specific topics and provide relevant responses
+            if (lowerMessage.includes('rate') || lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('charge')) {
+                return "Our freelancing platform helps you set competitive rates based on your skills and experience. You can browse similar freelancers' rates to ensure you're pricing your services appropriately. We also provide a rate calculator tool that considers factors like your expertise level, project complexity, and market demand to suggest optimal pricing strategies.";
+            } else if (lowerMessage.includes('client') || lowerMessage.includes('customer')) {
+                return "Our platform connects you with quality clients looking for freelancers like you. We provide tools to manage client relationships, track communications, and ensure smooth project delivery. Our client verification system helps ensure you're working with legitimate clients, and our dispute resolution team is available if any issues arise during your projects.";
+            } else if (lowerMessage.includes('portfolio') || lowerMessage.includes('showcase') || lowerMessage.includes('work')) {
+                return "You can showcase your best work on our platform through our portfolio feature. This helps potential clients see your skills and experience before hiring you. Our portfolio builder includes customizable templates, the ability to categorize projects by skill or industry, and analytics to track how many potential clients view your work. You can also link to external portfolios or GitHub repositories for developers.";
+            } else if (lowerMessage.includes('find') || lowerMessage.includes('get') || lowerMessage.includes('land') || lowerMessage.includes('job') || lowerMessage.includes('project')) {
+                return "Our platform lists numerous freelancing opportunities across various categories. You can browse projects, submit proposals, and connect with clients looking for your specific skills. We use an AI-powered matching algorithm that suggests relevant projects based on your profile, skills, and past work. You can also set up job alerts for specific keywords or categories to be notified when new opportunities arise.";
+            } else if (lowerMessage.includes('skill') || lowerMessage.includes('learn') || lowerMessage.includes('improve')) {
+                return "Our platform offers resources to help you improve your freelancing skills. Check out our learning section for tips, tutorials, and best practices to enhance your professional development. We partner with leading online learning platforms to offer discounted courses, and our community members regularly share knowledge through webinars and workshops. You can also take skill assessments to benchmark your abilities against industry standards.";
+            } else if (lowerMessage.includes('balance') || lowerMessage.includes('time') || lowerMessage.includes('manage')) {
+                return "Our platform includes project management tools to help you balance your workload and meet deadlines. You can track time, set milestones, and manage your schedule efficiently. Our calendar integration allows you to sync with your preferred calendar app, and our workload analyzer helps you avoid overcommitting to too many projects. We also offer productivity tips and time management strategies from successful freelancers.";
+            } else if (lowerMessage.includes('contract') || lowerMessage.includes('agreement') || lowerMessage.includes('legal')) {
+                return "We provide contract templates and tools to help you create professional agreements with your clients. This ensures both parties understand the project scope, timeline, and payment terms. Our contract builder includes customizable templates for different project types, with built-in protection clauses. We also offer legal resources and access to freelance-friendly lawyers for complex contract negotiations.";
+            } else if (lowerMessage.includes('payment') || lowerMessage.includes('invoice') || lowerMessage.includes('money') || lowerMessage.includes('get paid')) {
+                return "Our platform offers secure payment processing and invoicing tools. You can set up milestone payments, generate professional invoices, and track your earnings all in one place. We support multiple payment methods including bank transfers, PayPal, and cryptocurrency. Our escrow service protects both freelancers and clients by holding payment until project milestones are completed. We also provide detailed financial reports and tax preparation assistance.";
+            } else if (lowerMessage.includes('collaboration') || lowerMessage.includes('team') || lowerMessage.includes('partner')) {
+                return "Our collaboration hub allows you to connect with other freelancers for team projects. You can find partners with complementary skills to take on larger projects together. We offer team formation tools, shared workspaces, and communication channels to facilitate smooth collaboration. Our team project templates help you structure multi-freelancer projects effectively, and our reputation system recognizes successful team collaborations.";
+            } else if (lowerMessage.includes('tax') || lowerMessage.includes('accounting') || lowerMessage.includes('finance')) {
+                return "Our platform provides resources to help you manage your freelancing finances. We offer basic accounting tools to track income and expenses, and we partner with accounting software providers to offer discounted subscriptions. Our tax preparation guides help you understand your obligations, and we provide year-end financial reports to simplify tax filing. For complex financial situations, we can connect you with accountants who specialize in freelancer tax planning.";
+            } else if (lowerMessage.includes('insurance') || lowerMessage.includes('health') || lowerMessage.includes('benefits')) {
+                return "We understand that freelancers need access to benefits traditionally provided by employers. Our platform partners with insurance providers to offer group health, dental, and vision plans at competitive rates. We also provide access to retirement planning tools and disability insurance options. Our benefits marketplace allows you to compare and select the coverage that best fits your needs and budget.";
+            } else {
+                // For more complex or specific questions
+                if (lowerMessage.includes('how to') || lowerMessage.includes('what is') || lowerMessage.includes('explain') || lowerMessage.includes('tell me about')) {
+                    return "I'd be happy to provide more detailed information about that specific aspect of freelancing. Our platform offers comprehensive resources on this topic. You can find in-depth guides, video tutorials, and expert advice in our knowledge base. If you'd like to connect with other freelancers who have experience in this area, I can also direct you to relevant community groups.";
+                } else {
+                    // Generic freelancing response
+                    return "Our freelancing platform connects talented freelancers with clients looking for their services. You can browse projects, showcase your skills, and build your freelancing career with us. We offer tools for project management, secure payments, client communication, and professional development. Is there a specific aspect of freelancing you'd like to learn more about?";
+                }
+            }
+        }
+        
+        // Function to handle connection requests
+        function handleConnectRequest(freelancerName) {
+            // Map of freelancer names to their full names and profiles
+            const freelancerProfiles = {
+                'faizan': {
+                    fullName: 'Faizan Pathan',
+                    profile: 'faizan profile.html',
+                    skills: 'Full Stack Developer',
+                    experience: '5 years',
+                    expertise: ['React', 'Node.js', 'MongoDB', 'AWS'],
+                    rating: 4.9,
+                    completedProjects: 47,
+                    availability: 'Available for new projects',
+                    preferredContact: 'Email or direct message',
+                    status: 'online' // online, busy, away
+                },
+                'saiyoni': {
+                    fullName: 'Saiyoni Shah',
+                    profile: 'saiyoni profile.html',
+                    skills: 'UI/UX Designer',
+                    experience: '3 years',
+                    expertise: ['Figma', 'Adobe XD', 'User Research', 'Prototyping'],
+                    rating: 4.8,
+                    completedProjects: 32,
+                    availability: 'Available for new projects',
+                    preferredContact: 'Direct message',
+                    status: 'busy' // online, busy, away
+                },
+                'bhavy': {
+                    fullName: 'Bhavy Pandya',
+                    profile: 'bhavy profile.html',
+                    skills: 'Digital Marketing Specialist',
+                    experience: '7 years',
+                    expertise: ['SEO', 'Social Media', 'Content Strategy', 'Analytics'],
+                    rating: 4.9,
+                    completedProjects: 63,
+                    availability: 'Available for new projects',
+                    preferredContact: 'Email or direct message',
+                    status: 'away' // online, busy, away
+                }
+            };
+            
+            const freelancer = freelancerProfiles[freelancerName];
+            
+            if (freelancer) {
+                // Create a connection message with animation
+                setTimeout(() => {
+                    const chatMessages = document.querySelector('.chat-messages');
+                    
+                    // Create container for the connection message
+                    const connectionContainer = document.createElement('div');
+                    connectionContainer.className = 'greeting-response';
+                    connectionContainer.style.opacity = '0';
+                    connectionContainer.style.transform = 'translateY(10px)';
+                    chatMessages.appendChild(connectionContainer);
+                    
+                    // Add connection message
+                    const connectionDiv = document.createElement('div');
+                    connectionDiv.className = 'message system greeting';
+                    connectionDiv.innerHTML = `
+                        <p>I'm connecting you with ${freelancer.fullName}, a ${freelancer.skills} with ${freelancer.experience} of experience.</p>
+                        <div class="connection-status">
+                            <span class="connecting-dots">Connecting</span>
+                            <div class="connection-animation">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                        </div>
+                    `;
+                    connectionContainer.appendChild(connectionDiv);
+                    
+                    // Animate the message
+                    connectionDiv.style.transition = 'all 0.2s ease';
+                    connectionDiv.style.opacity = '1';
+                    connectionDiv.style.transform = 'translateY(0)';
+                    
+                    // Animate the container
+                    connectionContainer.style.transition = 'all 0.2s ease';
+                    connectionContainer.style.opacity = '1';
+                    connectionContainer.style.transform = 'translateY(0)';
+                    
+                    // After a delay, show the connected message with detailed information
+                    setTimeout(() => {
+                        const connectedDiv = document.createElement('div');
+                        connectedDiv.className = 'message system greeting connected';
+                        connectedDiv.innerHTML = `
+                            <p>Connected! Here's ${freelancer.fullName}'s profile:</p>
+                            <div class="freelancer-details">
+                                <p><strong>Skills:</strong> ${freelancer.skills}</p>
+                                <p><strong>Experience:</strong> ${freelancer.experience}</p>
+                                <p><strong>Expertise:</strong> ${freelancer.expertise.join(', ')}</p>
+                                <p><strong>Rating:</strong> ${freelancer.rating}/5.0</p>
+                                <p><strong>Completed Projects:</strong> ${freelancer.completedProjects}</p>
+                                <p><strong>Availability:</strong> ${freelancer.availability}</p>
+                                <p><strong>Preferred Contact:</strong> ${freelancer.preferredContact}</p>
+                                <p><strong>Status:</strong> <span class="status-indicator ${freelancer.status}">${getStatusText(freelancer.status)}</span></p>
+                            </div>
+                            <div class="action-buttons">
+                                <a href="${freelancer.profile}" class="view-profile-btn">View Full Profile</a>
+                                <button class="message-freelancer-btn" onclick="openDirectMessage('${freelancer.fullName}')">Send Message</button>
+                            </div>
+                        `;
+                        connectionContainer.appendChild(connectedDiv);
+                        
+                        // Animate the connected message
+                        connectedDiv.style.transition = 'all 0.2s ease';
+                        connectedDiv.style.opacity = '1';
+                        connectedDiv.style.transform = 'translateY(0)';
+                        
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 2000);
+                    
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 100);
+                
+                return "Connecting you with the freelancer...";
+            } else {
+                return "I couldn't find a freelancer with that name. Our available freelancers are Faizan Pathan, Saiyoni Shah, and Bhavy Pandya. Would you like to connect with one of them?";
+            }
+        }
+
+        // Function to get status text
+        function getStatusText(status) {
+            switch(status) {
+                case 'online':
+                    return 'Online';
+                case 'busy':
+                    return 'Busy';
+                case 'away':
+                    return 'Away';
+                default:
+                    return 'Unknown';
+            }
+        }
+
+        // Function to open direct message interface
+        function openDirectMessage(freelancerName) {
+            const chatMessages = document.querySelector('.chat-messages');
+            
+            // Create container for the direct message interface
+            const messageContainer = document.createElement('div');
+            messageContainer.className = 'greeting-response';
+            messageContainer.style.opacity = '0';
+            messageContainer.style.transform = 'translateY(10px)';
+            chatMessages.appendChild(messageContainer);
+            
+            // Add direct message interface
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message system greeting direct-message';
+            messageDiv.innerHTML = `
+                <p>Send a message to ${freelancerName}:</p>
+                <div class="direct-message-input">
+                    <textarea placeholder="Type your message here..." rows="3"></textarea>
+                    <button onclick="sendDirectMessage(this, '${freelancerName}')">Send Message</button>
+                </div>
+            `;
+            messageContainer.appendChild(messageDiv);
+            
+            // Animate the message
+            messageDiv.style.transition = 'all 0.2s ease';
+            messageDiv.style.opacity = '1';
+            messageDiv.style.transform = 'translateY(0)';
+            
+            // Animate the container
+            messageContainer.style.transition = 'all 0.2s ease';
+            messageContainer.style.opacity = '1';
+            messageContainer.style.transform = 'translateY(0)';
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Function to send direct message
+        function sendDirectMessage(button, freelancerName) {
+            const messageContainer = button.closest('.greeting-response');
+            const textarea = messageContainer.querySelector('textarea');
+            const message = textarea.value.trim();
+            
+            if (message) {
+                // Replace the input with a confirmation message
+                const confirmationDiv = document.createElement('div');
+                confirmationDiv.className = 'message system greeting message-sent';
+                confirmationDiv.innerHTML = `
+                    <p>Your message has been sent to ${freelancerName}!</p>
+                    <p class="message-preview">"${message.substring(0, 50)}${message.length > 50 ? '...' : ''}"</p>
+                    <p class="message-note">You'll be notified when ${freelancerName} responds.</p>
+                `;
+                
+                // Replace the direct message interface with the confirmation
+                messageContainer.innerHTML = '';
+                messageContainer.appendChild(confirmationDiv);
+                
+                // Animate the confirmation
+                confirmationDiv.style.transition = 'all 0.2s ease';
+                confirmationDiv.style.opacity = '1';
+                confirmationDiv.style.transform = 'translateY(0)';
+                
+                // Scroll to the confirmation
+                const chatMessages = document.querySelector('.chat-messages');
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        // Allow sending message with Enter key
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Add animation to chat messages on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach((message, index) => {
+                message.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            // Initialize status filters
+            initializeStatusFilters();
+            
+            // Initialize view options
+            initializeViewOptions();
+        });
+
+        // Function to initialize status filters
+        function initializeStatusFilters() {
+            const filterButtons = document.querySelectorAll('.status-filter');
+            const freelancerCards = document.querySelectorAll('.freelancer-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    const status = button.getAttribute('data-status');
+                    
+                    // Filter freelancer cards
+                    freelancerCards.forEach(card => {
+                        if (status === 'all' || card.getAttribute('data-status') === status) {
+                            card.style.display = 'block';
+                            card.style.animation = 'fadeInUp 0.6s ease forwards';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Function to initialize view options
+        function initializeViewOptions() {
+            const viewButtons = document.querySelectorAll('.view-option');
+            const container = document.querySelector('.freelancer-cards-container');
+            
+            viewButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    viewButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    const view = button.getAttribute('data-view');
+                    
+                    // Change view
+                    if (view === 'grid') {
+                        container.classList.remove('list-view');
+                        container.classList.add('grid-view');
+                    } else {
+                        container.classList.remove('grid-view');
+                        container.classList.add('list-view');
+                    }
+                    
+                    // Animate cards
+                    const cards = container.querySelectorAll('.freelancer-card');
+                    cards.forEach((card, index) => {
+                        card.style.animation = 'none';
+                        setTimeout(() => {
+                            card.style.animation = `fadeInUp 0.6s ease forwards ${index * 0.1}s`;
+                        }, 10);
+                    });
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+
+

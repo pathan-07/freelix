@@ -1,0 +1,71 @@
+hackathon/order.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order - FREELIX</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/order.css">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="logo">FREELIX</div>
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="profile.html" class="nav-link">Profile</a>
+            <a href="messaging.html" class="nav-link">Messages</a>
+            <a href="order.html" class="nav-link active">Orders</a>
+        </nav>
+    </header>
+    
+    <div class="layout">
+        <main class="main-content">
+            <div class="order-container">
+                <h1>Place New Order</h1>
+                <form class="order-form" id="orderForm">
+                    <div class="form-group">
+                        <label for="title">Project Title</label>
+                        <input type="text" id="title" name="title" required placeholder="Enter project title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Project Description</label>
+                        <textarea id="description" name="description" rows="4" required placeholder="Describe your project in detail"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="requirements">Requirements</label>
+                        <textarea id="requirements" name="requirements" rows="4" required placeholder="List your specific requirements"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="budget">Budget (USD)</label>
+                        <div class="budget-slider">
+                            <input type="range" id="budget" name="budget" min="100" max="10000" step="100" value="1000">
+                            <span id="budgetValue">$1,000</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="Your email address">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="Your contact number">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit Order</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="/static/js/order.js"></script>
+</body>
+</html>
