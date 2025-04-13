@@ -34,8 +34,16 @@
                                 <input type="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                             </div>
                             <div>
+                                <label class="block text-sm font-medium text-gray-700">Plan</label>
+                                <select id="planSelect" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                    <option value="basic">Basic</option>
+                                    <option value="standard">Standard</option>
+                                    <option value="advanced">Advanced</option>
+                                </select>
+                            </div>
+                            <div>
                                 <label class="block text-sm font-medium text-gray-700">Amount (USD)</label>
-                                <input type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                <input type="number" id="amountInput" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" readonly>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Description</label>
@@ -85,9 +93,106 @@
                     </div>
 
                     <button class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-200">
-                        Create Escrow Payment
+                        NEXT
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <!-- New Section for Additional Information -->
+        <div id="additionalInfo" class="hidden mt-8">
+            <div class="bg-white rounded-lg shadow-xl p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Add More Information</h2>
+                
+                <div id="creditCardDetails" class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4">Credit Card Details</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Card Number <span class="text-red-500">*</span></label>
+                            <input type="text" id="cardNumber" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Expiry Date <span class="text-red-500">*</span></label>
+                                <input type="text" id="expiryDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="MM/YY" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">CVV <span class="text-red-500">*</span></label>
+                                <input type="text" id="cvv" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="123" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Cardholder Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="cardholderName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="John Doe" required>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="saveCard" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <label for="saveCard" class="text-sm text-gray-700">Save card for future payments</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="bankTransferDetails" class="hidden bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4">Bank Transfer Details</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Bank Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="bankName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Enter bank name" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Account Number <span class="text-red-500">*</span></label>
+                            <input type="text" id="accountNumber" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Enter account number" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Routing Number <span class="text-red-500">*</span></label>
+                            <input type="text" id="routingNumber" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Enter routing number" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Account Holder Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="accountHolderName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Enter account holder name" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">SWIFT/BIC Code <span class="text-red-500">*</span></label>
+                            <input type="text" id="swiftCode" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Enter SWIFT/BIC code" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="cryptoDetails" class="hidden bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4">Cryptocurrency Payment Details</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Select Cryptocurrency <span class="text-red-500">*</span></label>
+                            <select id="cryptoType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                                <option value="">Select a cryptocurrency</option>
+                                <option value="bitcoin">Bitcoin (BTC)</option>
+                                <option value="ethereum">Ethereum (ETH)</option>
+                                <option value="usdt">Tether (USDT)</option>
+                                <option value="usdc">USD Coin (USDC)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Wallet Address <span class="text-red-500">*</span></label>
+                            <input type="text" id="walletAddress" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Enter your wallet address" required>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-md">
+                            <p class="text-sm text-yellow-700">
+                                <span class="font-semibold">Payment Amount:</span> $<span id="cryptoAmountDisplay"></span> USD
+                            </p>
+                            <p class="text-sm text-yellow-700 mt-2">
+                                <span class="font-semibold">Important:</span> Please ensure you send the exact amount shown above. The exchange rate will be calculated at the time of transaction.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="validationMessage" class="hidden mt-4 p-4 bg-red-50 rounded-md">
+                    <p class="text-red-700 text-sm"></p>
+                </div>
+
+                <button id="payNowButton" class="mt-6 w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition duration-200">
+                    PAY NOW
+                </button>
             </div>
         </div>
     </main>
@@ -120,5 +225,96 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const planSelect = document.getElementById('planSelect');
+            const amountInput = document.getElementById('amountInput');
+            const cryptoAmountDisplay = document.getElementById('cryptoAmountDisplay');
+            const additionalInfo = document.getElementById('additionalInfo');
+            const nextButton = document.querySelector('button');
+            const payNowButton = document.getElementById('payNowButton');
+            const validationMessage = document.getElementById('validationMessage');
+            const cardRadio = document.getElementById('card');
+            const bankRadio = document.getElementById('bank');
+            const cryptoRadio = document.getElementById('crypto');
+            const creditCardDetails = document.getElementById('creditCardDetails');
+            const bankTransferDetails = document.getElementById('bankTransferDetails');
+            const cryptoDetails = document.getElementById('cryptoDetails');
+
+            // Set initial amount based on default selected plan
+            updateAmount();
+
+            // Update amount when plan changes
+            planSelect.addEventListener('change', updateAmount);
+
+            function updateAmount() {
+                const selectedPlan = planSelect.value;
+                let amount;
+                switch(selectedPlan) {
+                    case 'basic':
+                        amount = 50;
+                        break;
+                    case 'standard':
+                        amount = 100;
+                        break;
+                    case 'advanced':
+                        amount = 200;
+                        break;
+                }
+                amountInput.value = amount;
+                cryptoAmountDisplay.textContent = amount;
+            }
+
+            nextButton.addEventListener('click', function() {
+                additionalInfo.classList.remove('hidden');
+                additionalInfo.scrollIntoView({ behavior: 'smooth' });
+
+                // Hide all payment details first
+                creditCardDetails.classList.add('hidden');
+                bankTransferDetails.classList.add('hidden');
+                cryptoDetails.classList.add('hidden');
+
+                // Show the selected payment method details
+                if (cardRadio.checked) {
+                    creditCardDetails.classList.remove('hidden');
+                } else if (bankRadio.checked) {
+                    bankTransferDetails.classList.remove('hidden');
+                } else if (cryptoRadio.checked) {
+                    cryptoDetails.classList.remove('hidden');
+                }
+            });
+
+            payNowButton.addEventListener('click', function() {
+                let missingFields = [];
+                
+                if (cardRadio.checked) {
+                    if (!document.getElementById('cardNumber').value) missingFields.push('Card Number');
+                    if (!document.getElementById('expiryDate').value) missingFields.push('Expiry Date');
+                    if (!document.getElementById('cvv').value) missingFields.push('CVV');
+                    if (!document.getElementById('cardholderName').value) missingFields.push('Cardholder Name');
+                } else if (bankRadio.checked) {
+                    if (!document.getElementById('bankName').value) missingFields.push('Bank Name');
+                    if (!document.getElementById('accountNumber').value) missingFields.push('Account Number');
+                    if (!document.getElementById('routingNumber').value) missingFields.push('Routing Number');
+                    if (!document.getElementById('accountHolderName').value) missingFields.push('Account Holder Name');
+                    if (!document.getElementById('swiftCode').value) missingFields.push('SWIFT/BIC Code');
+                } else if (cryptoRadio.checked) {
+                    if (!document.getElementById('cryptoType').value) missingFields.push('Cryptocurrency Type');
+                    if (!document.getElementById('walletAddress').value) missingFields.push('Wallet Address');
+                }
+
+                if (missingFields.length > 0) {
+                    validationMessage.classList.remove('hidden');
+                    validationMessage.querySelector('p').textContent = `Please fill in the following required fields: ${missingFields.join(', ')}`;
+                    validationMessage.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    validationMessage.classList.add('hidden');
+                    // Here you would typically process the payment
+                    alert('Payment processed successfully!');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
